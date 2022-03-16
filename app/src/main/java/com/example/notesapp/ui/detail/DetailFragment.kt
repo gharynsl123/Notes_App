@@ -5,16 +5,10 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import com.example.notesapp.MainActivity
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentDetailBinding
 import com.example.notesapp.utils.setActionBar
-import com.google.android.material.appbar.MaterialToolbar
 
 class DetailFragment : Fragment() {
 

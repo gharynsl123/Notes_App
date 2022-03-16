@@ -2,19 +2,34 @@ package com.example.notesapp.ui.add
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
+import com.example.notesapp.data.entity.Notes
+import com.example.notesapp.data.entity.Priority
 import com.example.notesapp.databinding.FragmentAddBinding
+import com.example.notesapp.ui.NotesViewModel
 import com.example.notesapp.utils.HelperFunctions
 import com.example.notesapp.utils.setActionBar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddFragment : Fragment() {
 
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding as FragmentAddBinding
+
+
+    //If You can't Use The one You can make new class "ViewModelFactory"
+    //ViewViewModelFactory for make some function to tell this activity Manually
+    //but id you can use this you don't have make new class(Optional)
+    private val addViewModels by viewModels<NotesViewModel>()
+
+    
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -38,6 +53,7 @@ class AddFragment : Fragment() {
         val action = menu.findItem(R.id.action_save)
         action.actionView.findViewById<AppCompatImageButton>(R.id.btn_save).setOnClickListener {
             insertNotes()
+            findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
     }
 
@@ -46,6 +62,24 @@ class AddFragment : Fragment() {
             val title = edtTitle.text.toString()
             val priority = spinnerPriorities.selectedItem.toString()
             val description = edtDescription.text.toString()
+            val calender = Calendar.getInstance().time
+            val date = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(calender)
+            val notes = Notes(0, title, parseToPriority(priority), description, date)
+
+            addViewModels.insertData(notes)
+
+            Toast.makeText(context, "successful add note.", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun parseToPriority(priority: String): Priority {
+        val expectedPriority = resources.getStringArray(R.array.priorities)
+        return when(priority){
+            expectedPriority[0] -> Priority.HIGH
+            expectedPriority[1] -> Priority.MEDIUM
+            expectedPriority[2] -> Priority.LOW
+            else -> Priority.HIGH
         }
     }
 
@@ -56,4 +90,9 @@ class AddFragment : Fragment() {
         }
        return super.onContextItemSelected(item)
     }*/
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding= null
+    }
 }

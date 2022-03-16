@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.example.notesapp.MainActivity
+import com.example.notesapp.ui.MainActivity
 import com.example.notesapp.R
 import com.google.android.material.appbar.MaterialToolbar
 
