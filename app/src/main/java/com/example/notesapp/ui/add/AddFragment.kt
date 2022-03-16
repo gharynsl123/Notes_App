@@ -29,9 +29,11 @@ class AddFragment : Fragment() {
     //but id you can use this you don't have make new class(Optional)
     private val addViewModels by viewModels<NotesViewModel>()
 
-    
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddBinding.inflate(layoutInflater)
         return binding.root
@@ -44,7 +46,8 @@ class AddFragment : Fragment() {
         //Change Costume Back Arrow
         binding.toolbarAdd.setActionBar(requireActivity())
         //Set The Priority Spinner
-        binding.spinnerPriorities.onItemSelectedListener = HelperFunctions.spinnerListener(context, binding.priorityIndicator)
+        binding.spinnerPriorities.onItemSelectedListener =
+            HelperFunctions.spinnerListener(context, binding.priorityIndicator)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,7 +56,6 @@ class AddFragment : Fragment() {
         val action = menu.findItem(R.id.action_save)
         action.actionView.findViewById<AppCompatImageButton>(R.id.btn_save).setOnClickListener {
             insertNotes()
-            findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
     }
 
@@ -62,20 +64,30 @@ class AddFragment : Fragment() {
             val title = edtTitle.text.toString()
             val priority = spinnerPriorities.selectedItem.toString()
             val description = edtDescription.text.toString()
+
             val calender = Calendar.getInstance().time
             val date = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(calender)
+
             val notes = Notes(0, title, parseToPriority(priority), description, date)
 
-            addViewModels.insertData(notes)
-
-            Toast.makeText(context, "successful add note.", Toast.LENGTH_SHORT).show()
+            //Make Some Decicion if title empty show error massage
+            //and if the description is empty show alert
+            if (edtTitle.text.isEmpty()) {
+                edtTitle.error = "Please Fill Field"
+            } else if (edtDescription.text.isEmpty()) {
+                Toast.makeText(context, "Your Notes Is still empty", Toast.LENGTH_LONG).show()
+            } else {
+                addViewModels.insertData(notes)
+                Toast.makeText(context, "successful add note.", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_addFragment_to_homeFragment)
+            }
         }
 
     }
 
     private fun parseToPriority(priority: String): Priority {
         val expectedPriority = resources.getStringArray(R.array.priorities)
-        return when(priority){
+        return when (priority) {
             expectedPriority[0] -> Priority.HIGH
             expectedPriority[1] -> Priority.MEDIUM
             expectedPriority[2] -> Priority.LOW
@@ -93,6 +105,6 @@ class AddFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding= null
+        _binding = null
     }
 }
