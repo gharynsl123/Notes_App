@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="desc">Image If No Notes Found</string>
+    <string name="fab">FAB HOME</string>
+    <string name="txt_title">Enter your title notes</string>
+    <string name="txt_priority">Category</string>
+    <string name="txt_date">Date</string>
+    <string name="txt_description">Write your note</string>
+    <string name="isi">panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget panjang banget</string>
+    <string name="date">17 Februari 2022</string>
+    <string name="title">ALSALSKDFN ASKLDFSDFLKN ALKSDN</string>
+    <string name="search">search</string>
+    <string name="category">sort</string>
+    <string name="high">Prioritu High</string>
+    <string name="loa">Prioritu low</string>
+    <string name="dlt">Delet All</string>
+    <string name="txt_save">save</string>
+    <string name="txt_edit">edit</string>
+    <string name="txt_delete">delete</string>
+    <string name="btn_text">Go to Detail</string>
+</resources>
