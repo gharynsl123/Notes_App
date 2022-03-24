@@ -56,7 +56,7 @@ class DetailFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-                .setNegativeButton("No") { _, _ -> }.setNeutralButton("Cencel") { _, _ -> }.show()
+                .setNegativeButton("No") { _, _ -> }.show()
         }
     }
 }

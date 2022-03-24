@@ -16,6 +16,7 @@
     <string name="dlt">Delet All</string>
     <string name="txt_save">save</string>
     <string name="txt_edit">edit</string>
+    <string name="no_notes">No Notes</string>
     <string name="txt_delete">delete</string>
     <string name="btn_text">Go to Detail</string>
 </resources>
