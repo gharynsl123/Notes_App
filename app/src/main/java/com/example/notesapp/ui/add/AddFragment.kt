@@ -13,6 +13,7 @@ import com.example.notesapp.data.entity.Priority
 import com.example.notesapp.databinding.FragmentAddBinding
 import com.example.notesapp.ui.NotesViewModel
 import com.example.notesapp.utils.HelperFunctions
+import com.example.notesapp.utils.HelperFunctions.parseToPriority
 import com.example.notesapp.utils.setActionBar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,7 +69,7 @@ class AddFragment : Fragment() {
             val calender = Calendar.getInstance().time
             val date = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(calender)
 
-            val notes = Notes(0, title, parseToPriority(priority), description, date)
+            val notes = Notes(0, title, parseToPriority(priority, context), description, date)
 
             //Make Some Decicion if title empty show error massage
             //and if the description is empty show alert
@@ -83,16 +84,6 @@ class AddFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun parseToPriority(priority: String): Priority {
-        val expectedPriority = resources.getStringArray(R.array.priorities)
-        return when (priority) {
-            expectedPriority[0] -> Priority.HIGH
-            expectedPriority[1] -> Priority.MEDIUM
-            expectedPriority[2] -> Priority.LOW
-            else -> Priority.HIGH
-        }
     }
 
     /*

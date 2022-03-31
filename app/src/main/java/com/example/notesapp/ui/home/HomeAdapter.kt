@@ -23,18 +23,21 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: HomeAdapter.MyViewHolder, position: Int) {
         val data = listNotes[position]
         holder.binding.apply {
-            tvTitle.text = data.title
+
+            mNotes = data
+            executePendingBindings()
+            /*tvTitle.text = data.title
             tvDescription.text = data.decs
             tvDate.text = data.date
 
-//            val pink = ContextCompat.getColor(priorityIndicator.context, R.color.pink)
-//            val yellow = ContextCompat.getColor(priorityIndicator.context, R.color.yellow)
-//            val green = ContextCompat.getColor(priorityIndicator.context, R.color.green)
-//            when(data.priority){
-//                Priority.HIGH -> priorityIndicator.setBackgroundColor(pink)
-//                Priority.MEDIUM -> priorityIndicator.setBackgroundColor(yellow)
-//                Priority.LOW -> priorityIndicator.setBackgroundColor(green)
-//            }
+            val pink = ContextCompat.getColor(priorityIndicator.context, R.color.pink)
+            val yellow = ContextCompat.getColor(priorityIndicator.context, R.color.yellow)
+            val green = ContextCompat.getColor(priorityIndicator.context, R.color.green)
+            when(data.priority){
+                Priority.HIGH -> priorityIndicator.setBackgroundColor(pink)
+                Priority.MEDIUM -> priorityIndicator.setBackgroundColor(yellow)
+                Priority.LOW -> priorityIndicator.setBackgroundColor(green)
+            }
             when(data.priority){
                 Priority.HIGH -> {
                     // cara memanggil warna di object
@@ -49,7 +52,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
                     val green = ContextCompat.getColor(priorityIndicator.context, R.color.green)
                     priorityIndicator.setCardBackgroundColor(green)
                 }
-            }
+            }*/
         }
     }
 

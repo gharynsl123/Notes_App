@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.notesapp.R
+import com.example.notesapp.data.entity.Priority
 
 object HelperFunctions {
     fun  spinnerListener(context : Context?, priorityIndicator : CardView):AdapterView.OnItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
@@ -16,7 +17,7 @@ object HelperFunctions {
                     0 -> {
                         //for chosing color
                         val pink = ContextCompat.getColor(it, R.color.pink)
-                        //set background color and set radius
+                        //set background color
                         priorityIndicator.setCardBackgroundColor(pink)
                     }
                     1 -> {
@@ -33,6 +34,16 @@ object HelperFunctions {
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             TODO("Not yet implemented")
+        }
+    }
+
+    fun parseToPriority(priority: String, context: Context?): Priority {
+        val expectedPriority = context?.resources?.getStringArray(R.array.priorities)
+        return when (priority) {
+            expectedPriority?.get(0) -> Priority.HIGH
+            expectedPriority?.get(1) -> Priority.MEDIUM
+            expectedPriority?.get(2) -> Priority.LOW
+            else -> Priority.HIGH
         }
     }
 }

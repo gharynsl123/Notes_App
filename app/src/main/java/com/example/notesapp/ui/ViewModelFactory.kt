@@ -8,7 +8,7 @@ class ViewModelFactory private constructor(private val mApplication: Application
     : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel?> create(modelClass: Class<T>):T{
         return when{
             modelClass.isAssignableFrom(NotesViewModel::class.java) -> NotesViewModel(mApplication) as T
             else -> throw IllegalAccessException("Unknown ViewModel Class ${modelClass.name}")

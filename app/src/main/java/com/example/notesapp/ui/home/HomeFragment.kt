@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.ui.MainActivity
 import com.example.notesapp.R
@@ -61,9 +63,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             findNavController().navigate(R.id.action_homeFragment_to_addFragment)
         }
 
-        binding.btnDetail.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment2)
-        }
+//        binding.btnDetail.setOnClickListener {
+//            findNavController().navigate(R.id.action_homeFragment_to_detailFragment2)
+//        }
 
         setUpRecyclerView()
     }
@@ -78,6 +80,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             adapter = homeAdapter
             // staggeredGridLayout = mengisi letak kosong terlebih dahulu pada layout
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+            swipeToDelete(this)
         }
     }
 
@@ -166,8 +169,32 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
+    private fun swipeToDelete(recyclerView: RecyclerView) {
+        val swipeToDelete = object : ItemTouchHelper.SimpleCallback(// ItemTouchHelper supaya bisa menggeser kekiri atau kekanan
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedItem = homeAdapter.listNotes[viewHolder.adapterPosition]
+                homeViewModel.deleteNote(deletedItem)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDelete)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+
 }
