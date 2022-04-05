@@ -21,7 +21,7 @@ import java.util.*
 
 class UpdateFragment : Fragment() {
 
-    private var _binding : FragmentUpdateBinding? = null
+    private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding as FragmentUpdateBinding
 
     private val saveArgs: UpdateFragmentArgs by navArgs()
@@ -31,7 +31,7 @@ class UpdateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentUpdateBinding.inflate(layoutInflater)
         return binding.root
@@ -46,7 +46,8 @@ class UpdateFragment : Fragment() {
 
         binding.apply {
             toolbarUpdate.setActionBar(requireActivity())
-            spinnerPrioritiesUpdate.onItemSelectedListener = spinnerListener(context, binding.priorityIndicator)
+            spinnerPrioritiesUpdate.onItemSelectedListener =
+                spinnerListener(context, binding.priorityIndicator)
         }
     }
 
@@ -67,22 +68,23 @@ class UpdateFragment : Fragment() {
 
         val formatedDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
 
-        findNavController().navigate(R.id.action_updateFragment_to_detailFragment)
-        Toast.makeText(context, "Note has Been Update", Toast.LENGTH_SHORT).show()
+        val notes = Notes(
+            saveArgs.currentItem.id,
+            title,
+            parseToPriority(priority, context),
+            desc,
+            formatedDate
+        )
 
-        if (title.isEmpty()){
+        if (title.isEmpty()) {
             binding.edtTitleUpdate.error = "Please Fill Field"
         } else if (desc.isEmpty()) {
             Toast.makeText(context, "Your Notes Is still empty", Toast.LENGTH_LONG).show()
         } else {
-            updateViewModel.updateNote(Notes(saveArgs.currentItem.id,
-                title,
-                parseToPriority(priority, context),
-                desc,
-                formatedDate
-            ))
-            Toast.makeText(context, "successful add note.", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_updateFragment_to_detailFragment)
+            updateViewModel.updateNote(notes)
+            val action = UpdateFragmentDirections.actionUpdateFragmentToDetailFragment(notes)
+            Toast.makeText(context, "successful update note.", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(action)
         }
     }
 
