@@ -2,21 +2,20 @@ package com.example.notesapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notesapp.R
 import com.example.notesapp.data.entity.Notes
-import com.example.notesapp.data.entity.Priority
 import com.example.notesapp.databinding.RowItemNotesBinding
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     val listNotes = ArrayList<Notes>()
-    inner class MyViewHolder(val binding: RowItemNotesBinding) : RecyclerView.ViewHolder(binding.root)
+
+    inner class MyViewHolder(val binding: RowItemNotesBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= MyViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         RowItemNotesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
@@ -58,10 +57,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     override fun getItemCount() = listNotes.size
 
-    fun setData(data: List<Notes>?){
+    fun setData(data: List<Notes>?) {
         if (data == null) return
         val diffCalback = DiffCallback(listNotes, data)
-        val diffCallbackResult =  DiffUtil.calculateDiff(diffCalback)
+        val diffCallbackResult = DiffUtil.calculateDiff(diffCalback)
         listNotes.clear()
         listNotes.addAll(data)
         diffCallbackResult.dispatchUpdatesTo(this)

@@ -48,7 +48,7 @@ class DetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_edit ->{
+            R.id.menu_edit -> {
                 val action = DetailFragmentDirections.actionDetailFragmentToUpdateFragment(
                     Notes(
                         navArgs.currentItem.id,

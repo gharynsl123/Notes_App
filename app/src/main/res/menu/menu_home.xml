@@ -27,5 +27,5 @@
         android:id="@+id/menu_delet_all"
         android:icon="@drawable/ic_delete"
         android:title="@string/dlt"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

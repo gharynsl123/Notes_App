@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="saveArgs"
             type="com.example.notesapp.ui.update.UpdateFragmentArgs" />

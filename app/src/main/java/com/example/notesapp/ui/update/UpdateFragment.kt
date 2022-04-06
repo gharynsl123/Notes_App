@@ -39,7 +39,7 @@ class UpdateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //inisialisasi variabel dataBinding yang ada di XML
+        //initialitation variable dataBinding yang ada di XML
         binding.saveArgs = saveArgs
 
         setHasOptionsMenu(true)

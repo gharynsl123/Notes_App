@@ -1,13 +1,14 @@
 package com.example.notesapp.utils
 
+import android.view.View
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.example.notesapp.R
 import com.example.notesapp.data.entity.Notes
 import com.example.notesapp.data.entity.Priority
-import com.example.notesapp.ui.detail.DetailFragment
 import com.example.notesapp.ui.home.HomeFragmentDirections
 import com.google.android.material.card.MaterialCardView
 
@@ -16,7 +17,9 @@ object BindingAdapter {
     @JvmStatic
     fun parsePriorityColor(cardView: MaterialCardView, priority: Priority) {
         when (priority) {
-            Priority.LOW -> cardView.setCardBackgroundColor(cardView.context.getColor(R.color.green))
+            Priority.LOW -> {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.green))
+            }
             Priority.MEDIUM -> cardView.setCardBackgroundColor(cardView.context.getColor(R.color.yellow))
             Priority.HIGH -> cardView.setCardBackgroundColor(cardView.context.getColor(R.color.pink))
         }
@@ -40,4 +43,14 @@ object BindingAdapter {
             Priority.HIGH -> view.setSelection(0)
         }
     }
+
+    @BindingAdapter("android:emptyDatabase")
+    @JvmStatic
+    fun emptyDatabase(view: View, emptyDatabase: MutableLiveData<Boolean>) {
+        when (emptyDatabase.value) {
+            true -> view.visibility = View.VISIBLE
+            else -> view.visibility = View.INVISIBLE
+        }
+    }
+
 }

@@ -17,4 +17,4 @@ data class Notes(
     var priority: Priority,
     var decs: String,
     var date: String
-): Parcelable
+) : Parcelable

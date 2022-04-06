@@ -7,12 +7,10 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.notesapp.R
 import com.example.notesapp.data.entity.Notes
 import com.example.notesapp.databinding.FragmentAddBinding
 import com.example.notesapp.ui.NotesViewModel
-import com.example.notesapp.ui.update.UpdateFragmentArgs
 import com.example.notesapp.utils.HelperFunctions
 import com.example.notesapp.utils.HelperFunctions.parseToPriority
 import com.example.notesapp.utils.setActionBar

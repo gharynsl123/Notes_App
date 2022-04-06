@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,11 +15,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.notesapp.ui.MainActivity
 import com.example.notesapp.R
 import com.example.notesapp.data.entity.Notes
 import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.ui.MainActivity
 import com.example.notesapp.ui.NotesViewModel
+import com.example.notesapp.utils.HelperFunctions
+import com.example.notesapp.utils.HelperFunctions.checkIsDataEmpty
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -45,7 +49,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //memberitahu kepada fragment bahwa fragment ini memiliki menu sendiri
+        binding.mHelperFunctions = HelperFunctions
+
+        //tell kepada fragment bahwa fragment ini memiliki menu sendiri
         setHasOptionsMenu(true)
 
         //Kodingan tambahan untuk menampilkan Menu di fragment
@@ -78,23 +84,12 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 _currentData = it
             }
             adapter = homeAdapter
-            // staggeredGridLayout = mengisi letak kosong terlebih dahulu pada layout
+            // staggeredGridLayout
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             swipeToDelete(this)
         }
     }
 
-    private fun checkIsDataEmpty(data: List<Notes>?) {
-        binding.apply {
-            if (data?.isEmpty() == true) {
-                imgNoNotes.visibility = View.VISIBLE
-                rvHome.visibility = View.INVISIBLE
-            } else {
-                imgNoNotes.visibility = View.INVISIBLE
-                rvHome.visibility = View.VISIBLE
-            }
-        }
-    }
 
     //membuat menu dari menu home
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -105,6 +100,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         val searchAction = search.actionView as? SearchView
         searchAction?.setOnQueryTextListener(this)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_priority_high -> homeViewModel.sortByHighPriority()
@@ -151,7 +147,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         val querySearch = "%$query%"
         query?.let {
-            homeViewModel.searchByQuery(querySearch).observe(this){ dataSearch ->
+            homeViewModel.searchByQuery(querySearch).observe(this) { dataSearch ->
                 homeAdapter.setData(dataSearch)
             }
         }
@@ -162,7 +158,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         val querySearch = "%$newText%"
         newText?.let {
-            homeViewModel.searchByQuery(querySearch).observe(this){ dataSearch ->
+            homeViewModel.searchByQuery(querySearch).observe(this) { dataSearch ->
                 homeAdapter.setData(dataSearch)
             }
         }
@@ -170,10 +166,11 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
-        val swipeToDelete = object : ItemTouchHelper.SimpleCallback(// ItemTouchHelper supaya bisa menggeser kekiri atau kekanan
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ){
+        val swipeToDelete = object :
+            ItemTouchHelper.SimpleCallback(// ItemTouchHelper supaya bisa menggeser kekiri atau kekanan
+                0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -185,16 +182,27 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val deletedItem = homeAdapter.listNotes[viewHolder.adapterPosition]
                 homeViewModel.deleteNote(deletedItem)
+                restorData(viewHolder.itemView, deletedItem)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDelete)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
+    private fun restorData(view: View, item: Notes) {
+        val snackBar = Snackbar.make(
+            view, "Deleted: '${item.title}'",
+            Snackbar.LENGTH_LONG
+        )
+        snackBar.setTextColor(ContextCompat.getColor(view.context, R.color.black))
+        snackBar.setAction("Undo") {
+            homeViewModel.insertData(item)
+        }
+        snackBar.show()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-
 }
