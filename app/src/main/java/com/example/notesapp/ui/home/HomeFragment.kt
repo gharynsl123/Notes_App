@@ -3,7 +3,7 @@ package com.example.notesapp.ui.home
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -80,6 +80,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.rvHome.apply {
             homeViewModel.getAllData().observe(viewLifecycleOwner) {
                 checkIsDataEmpty(it)
+                showEmptyDataLayout(it)
                 homeAdapter.setData(it)
                 _currentData = it
             }
@@ -87,6 +88,19 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             // staggeredGridLayout
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             swipeToDelete(this)
+        }
+    }
+
+    private fun showEmptyDataLayout(it: List<Notes>) {
+        when(it.isEmpty()){
+            true -> {
+                binding.rvHome.visibility = View.INVISIBLE
+                binding.imgNoNotes.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.rvHome.visibility = View.VISIBLE
+                binding.imgNoNotes.visibility = View.INVISIBLE
+            }
         }
     }
 
