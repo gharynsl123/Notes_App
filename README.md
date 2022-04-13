@@ -23,3 +23,11 @@ RPL IDN Learning, Source code project 6
 
 ## This Is the result of my app
 
+| <img src="/images/add.png"/> | <img src="/images/detail.png"/> | <img src="/images/priority.png"/>
+| :--: | :--: | :--: |
+
+| <img src="/images/shortpriority.png"/> | <img src="/images/sortby.png"/> | <img src="/images/tampilan utama.png"/>
+| :--: | :--: | :--: |
+
+| <img src="/images/splashscreen.png"/> | <img src="/images/deleteall.png"/> | <img src="/images/searchwidget.png"/>
+| :--: | :--: | :--: |
